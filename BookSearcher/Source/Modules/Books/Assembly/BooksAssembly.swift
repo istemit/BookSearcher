@@ -9,7 +9,8 @@ import UIKit
 
 final class BooksAssembly: BaseAssembly {
     func makeModule() -> AssembledScreen<BooksModuleInputProtocol> {
-        let interactor = BooksInteractor()
+        let bookService = BookService(provider: BaseNetwork<BookTarget>())
+        let interactor = BooksInteractor(bookService: bookService)
         let viewController = BooksViewController()
         let router = BooksRouter(viewController: viewController)
         let presenter = BooksPresenter(view: viewController, interactor: interactor, router: router)

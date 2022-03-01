@@ -12,6 +12,7 @@ protocol BooksViewOutputProtocol: AnyObject {
     func viewDidDisappear()
     func viewWillAppear()
     func viewDidSelectBook(_ book: BookEntity)
+    func viewDidEndSearching(_ text: String)
 }
 
 protocol BooksViewInputProtocol: AnyObject {
@@ -23,6 +24,13 @@ final class BooksViewController: BaseViewController {
     weak var output: BooksViewOutputProtocol? {
         didSet { basePresenter = output as? BasePresenter }
     }
+    
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        return searchBar
+    }()
     
     private var adapter: BooksTableAdapter?
     private lazy var tableView: UITableView = {
@@ -40,9 +48,11 @@ final class BooksViewController: BaseViewController {
 // MARK: - BooksViewInputProtocol
 extension BooksViewController: BooksViewInputProtocol {
     func setupView() {
+        view.backgroundColor = .white
+        
         setupNavigationBar()
         adapter = .init(tableView: tableView, output: self)
-        [tableView].forEach(view.addSubview(_:))
+        [searchBar, tableView].forEach(view.addSubview(_:))
         configureConstraints()
     }
     
@@ -58,11 +68,26 @@ extension BooksViewController: BooksTableAdapterOutput {
     }
 }
 
+// MARK: - UISearchBarDelegate
+extension BooksViewController: UISearchBarDelegate {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        output?.viewDidEndSearching(searchBar.text ?? "")
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        output?.viewDidEndSearching(searchBar.text ?? "")
+    }
+}
+
 // MARK: - Private methods
 private extension BooksViewController {
     func configureConstraints() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -70,6 +95,6 @@ private extension BooksViewController {
     }
     
     func setupNavigationBar() {
-        navigationController?.title = "Books" // TODO: - Add localizable strings
+        title = "Books" // TODO: - Add localizable strings
     }
 }

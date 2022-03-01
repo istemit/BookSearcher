@@ -12,21 +12,35 @@ protocol BooksInteractorOutputProtocol: AnyObject {
 }
 
 protocol BooksInteractorInputProtocol {
-    func fetchBooks()
+    func fetchBooks(by query: String)
 }
 
 final class BooksInteractor: BaseInteractor {
     weak var output: BooksInteractorOutputProtocol? {
         didSet { basePresenter = output as? BasePresenter }
     }
+    
+    private let bookService: BookServiceProtocol
 
-//    init() {
-//        // TODO: - Add dependencies
-//    }
+    init(bookService: BookServiceProtocol) {
+        self.bookService = bookService
+    }
 }
 
 // MARK: - BooksInteractorInputProtocol
 extension BooksInteractor: BooksInteractorInputProtocol {
+    func fetchBooks(by query: String) {
+        bookService.getBooks(by: query) { [weak self] result in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                switch result {
+                case let .success(items):
+                    self.output?.didFetchBooks(items)
+                case .failure:
+                    break
+                }
+            }
+        }
     }
 }
 

@@ -56,6 +56,9 @@ extension BooksPresenter: BooksViewOutputProtocol {
     func viewDidSelectBook(_ book: BookEntity) {
     }
     
+    func viewDidEndSearching(_ text: String) {
+        guard !text.isEmpty else { return }
+        interactor.fetchBooks(by: text)
     }
 }
 
