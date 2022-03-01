@@ -21,6 +21,7 @@ final class BooksPresenter: BasePresenter {
     private let interactor: BooksInteractorInputProtocol
     private let router: BooksRouterInputProtocol
     
+    private var books: [BookEntity] = []
     private var rows: [BooksTableRowType] = []
     
     init(view: BooksViewInputProtocol,
@@ -52,13 +53,17 @@ extension BooksPresenter: BooksViewOutputProtocol {
     func viewWillAppear() {
     }
     
-    func viewDidSelectBook(_ book: String) {
+    func viewDidSelectBook(_ book: BookEntity) {
+    }
+    
     }
 }
 
 // MARK: - BooksInteractorOutputProtocol
 extension BooksPresenter: BooksInteractorOutputProtocol {
-    func didFetchBooks(_ books: [String]) {
+    func didFetchBooks(_ books: [BookEntity]) {
+        self.books = books
+        configureRows()
     }
 }
 
@@ -69,5 +74,7 @@ extension BooksPresenter: BooksRouterOutputProtocol {
 // MARK: - Private methods
 private extension BooksPresenter {
     func configureRows() {
+        self.rows = books.map { .book(item: $0) }
+        view?.reload(with: rows, animated: true)
     }
 }

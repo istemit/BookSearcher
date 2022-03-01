@@ -8,7 +8,7 @@
 import Foundation
 
 protocol BooksInteractorOutputProtocol: AnyObject {
-    func didFetchBooks(_ books: [String])
+    func didFetchBooks(_ books: [BookEntity])
 }
 
 protocol BooksInteractorInputProtocol {
@@ -27,8 +27,6 @@ final class BooksInteractor: BaseInteractor {
 
 // MARK: - BooksInteractorInputProtocol
 extension BooksInteractor: BooksInteractorInputProtocol {
-    func fetchBooks() {
-        output?.didFetchBooks([])
     }
 }
 

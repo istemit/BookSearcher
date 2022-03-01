@@ -8,11 +8,11 @@
 import UIKit
 
 enum BooksTableRowType {
-    case book(name: String)
+    case book(item: BookEntity)
 }
 
 protocol BooksTableAdapterOutput: AnyObject {
-    func didSelectBook(_ adapter: BooksTableAdapterInput, book: String)
+    func didSelectBook(_ adapter: BooksTableAdapterInput, book: BookEntity)
 }
 
 protocol BooksTableAdapterInput {
@@ -54,8 +54,11 @@ extension BooksTableAdapter: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch rows[indexPath.row] {
-        case let .book(name):
-            return UITableViewCell()
+        case let .book(item):
+            let cell: BookTableCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.setTitle(item.title)
+            cell.setAuthor(item.authors.joined(separator: ", "))
+            return cell
         }
     }
 }
@@ -64,8 +67,8 @@ extension BooksTableAdapter: UITableViewDataSource {
 extension BooksTableAdapter: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch rows[indexPath.row] {
-        case let .book(name):
-            output?.didSelectBook(self, book: name)
+        case let .book(item):
+            output?.didSelectBook(self, book: item)
         }
     }
 }
@@ -80,7 +83,8 @@ private extension BooksTableAdapter {
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         tableView.contentInset = .init(top: 16.0, left: .zero, bottom: 36.0, right: .zero)
+        tableView.separatorStyle = .singleLine
 
-        [].forEach(tableView.register(cellClass:))
+        [BookTableCell.self].forEach(tableView.register(cellClass:))
     }
 }

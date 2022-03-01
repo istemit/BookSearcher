@@ -11,7 +11,7 @@ protocol BooksViewOutputProtocol: AnyObject {
     func viewDidLoad()
     func viewDidDisappear()
     func viewWillAppear()
-    func viewDidSelectBook(_ book: String)
+    func viewDidSelectBook(_ book: BookEntity)
 }
 
 protocol BooksViewInputProtocol: AnyObject {
@@ -53,7 +53,7 @@ extension BooksViewController: BooksViewInputProtocol {
 
 // MARK: - BooksTableAdapterOutput
 extension BooksViewController: BooksTableAdapterOutput {
-    func didSelectBook(_ adapter: BooksTableAdapterInput, book: String) {
+    func didSelectBook(_ adapter: BooksTableAdapterInput, book: BookEntity) {
         output?.viewDidSelectBook(book)
     }
 }
