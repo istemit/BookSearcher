@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow()
         
         let booksModule = BooksAssembly().makeModule()
-        window?.rootViewController = booksModule.viewController
+        window?.rootViewController = UINavigationController(rootViewController: booksModule.viewController)
         window?.makeKeyAndVisible()
         
         return true
