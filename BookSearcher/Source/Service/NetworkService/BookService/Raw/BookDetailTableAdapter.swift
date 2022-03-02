@@ -8,7 +8,8 @@
 import UIKit
 
 enum BookDetailTableRowType {
-    case book(item: BookEntity)
+    case thumbnail(path: String)
+    case info(book: BookEntity)
 }
 
 protocol BookDetailTableAdapterOutput: AnyObject {
@@ -53,10 +54,15 @@ extension BookDetailTableAdapter: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch rows[indexPath.row] {
-        case let .book(item):
-            let cell: BookTableCell = tableView.dequeueReusableCell(for: indexPath)
+        case let .thumbnail(path):
+            let cell: BookDetailImageTableCell = tableView.dequeueReusableCell(for: indexPath)
+            cell.setThumnailPath(path)
+            return cell
+        case let .info(item):
+            let cell: BookDetailDescriptionTableCell = tableView.dequeueReusableCell(for: indexPath)
             cell.setTitle(item.title)
             cell.setAuthor(item.authors.joined(separator: ", "))
+            cell.setDescription(item.description)
             return cell
         }
     }
@@ -64,6 +70,14 @@ extension BookDetailTableAdapter: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension BookDetailTableAdapter: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch rows[indexPath.row] {
+        case .thumbnail:
+            return UIScreen.main.bounds.width * 0.7
+        case .info:
+            return UITableView.automaticDimension
+        }
+    }
 }
 
 // MARK: - Private methods
@@ -75,9 +89,7 @@ private extension BookDetailTableAdapter {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
-        tableView.contentInset = .init(top: 16.0, left: .zero, bottom: 36.0, right: .zero)
-        tableView.separatorStyle = .singleLine
 
-        [BookTableCell.self].forEach(tableView.register(cellClass:))
+        [BookDetailImageTableCell.self, BookDetailDescriptionTableCell.self].forEach(tableView.register(cellClass:))
     }
 }

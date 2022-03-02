@@ -46,7 +46,6 @@ extension BookDetailViewController: BookDetailViewInputProtocol {
     }
     
     func updateTitle(_ title: String) {
-//        navigationController?.title = title
         self.title = title
     }
     

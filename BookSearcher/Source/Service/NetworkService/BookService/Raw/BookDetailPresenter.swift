@@ -47,6 +47,7 @@ extension BookDetailPresenter: BookDetailViewOutputProtocol {
     func viewDidLoad() {
         view?.setupView()
         view?.updateTitle(book?.title ?? "")
+        configureRows()
     }
 }
 
@@ -63,7 +64,15 @@ private extension BookDetailPresenter {
     func configureRows() {
         guard let book = book else { return }
         
-//        self.rows = books.map { .book(item: $0) }
+        var rows: [BookDetailTableRowType] = []
+        
+        if let thumbnailPath = book.thumbnail {
+            rows.append(.thumbnail(path: thumbnailPath))
+        }
+        
+        rows.append(.info(book: book))
+        
+        self.rows = rows
         view?.reload(with: rows, animated: true)
     }
 }

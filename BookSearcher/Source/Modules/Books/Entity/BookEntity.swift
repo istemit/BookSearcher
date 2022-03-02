@@ -12,8 +12,8 @@ struct BookEntity {
     let title: String
     let authors: [String]
     let description: String
-    let smallThumbnail: String
-    let thumbnail: String
+    let smallThumbnail: String?
+    let thumbnail: String?
 }
 
 // MARK: - Builder
@@ -24,8 +24,8 @@ extension BookEntity {
                               title: raw.volumeInfo?.title ?? "",
                               authors: raw.volumeInfo?.authors ?? ["-"],
                               description: raw.volumeInfo?.description ?? "",
-                              smallThumbnail: raw.volumeInfo?.imageLinks?.smallThumbnail ?? "",
-                              thumbnail: raw.volumeInfo?.imageLinks?.thumbnail ?? "")
+                              smallThumbnail: raw.volumeInfo?.imageLinks?.smallThumbnail,
+                              thumbnail: raw.volumeInfo?.imageLinks?.thumbnail)
         }
     }
 }
