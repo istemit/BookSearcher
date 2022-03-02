@@ -81,10 +81,9 @@ private extension BooksTableAdapter {
         
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
-        tableView.contentInset = .init(top: 16.0, left: .zero, bottom: 36.0, right: .zero)
         tableView.separatorStyle = .singleLine
+        tableView.backgroundColor = .clear
+        tableView.contentInset = .init(top: .zero, left: .zero, bottom: ConstraintConstant.large, right: .zero)
 
         [BookTableCell.self].forEach(tableView.register(cellClass:))
     }
