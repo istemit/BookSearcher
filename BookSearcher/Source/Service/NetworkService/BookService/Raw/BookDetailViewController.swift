@@ -38,7 +38,7 @@ final class BookDetailViewController: BaseViewController {
 // MARK: - BookDetailViewInputProtocol
 extension BookDetailViewController: BookDetailViewInputProtocol {
     func setupView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .white // TODO: - Add color manager
         
         adapter = .init(tableView: tableView, output: self)
         [tableView].forEach(view.addSubview(_:))

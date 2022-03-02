@@ -19,7 +19,7 @@ final class BookDetailDescriptionTableCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.font = .systemFont(ofSize: 18, weight: .bold) // TODO: - Add font manager
         label.numberOfLines = .zero
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -27,8 +27,8 @@ final class BookDetailDescriptionTableCell: UITableViewCell {
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = UIColor.black.withAlphaComponent(0.8)
+        label.font = .systemFont(ofSize: 14) // TODO: - Add font manager
+        label.textColor = UIColor.black.withAlphaComponent(0.8) // TODO: - Add color manager
         label.numberOfLines = .zero
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -36,7 +36,7 @@ final class BookDetailDescriptionTableCell: UITableViewCell {
 
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .systemFont(ofSize: 16) // TODO: - Add font manager
         label.numberOfLines = .zero
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

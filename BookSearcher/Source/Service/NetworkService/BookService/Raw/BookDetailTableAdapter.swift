@@ -88,7 +88,7 @@ private extension BookDetailTableAdapter {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = .clear // TODO: - Add color manager
 
         [BookDetailImageTableCell.self, BookDetailDescriptionTableCell.self].forEach(tableView.register(cellClass:))
     }

@@ -14,7 +14,7 @@ final class BookTableCell: UITableViewCell {
         imageView.layer.cornerRadius = Constants.thumbnailCornerRadius
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        imageView.backgroundColor = UIColor.black.withAlphaComponent(0.1) // TODO: - Add color manager
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -28,8 +28,8 @@ final class BookTableCell: UITableViewCell {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16, weight: .bold)
-        label.textColor = .black
+        label.font = .systemFont(ofSize: 16, weight: .bold) // TODO: - Add font manager
+        label.textColor = .black // TODO: - Add color manager
         label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -37,8 +37,8 @@ final class BookTableCell: UITableViewCell {
     
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 14)
-        label.textColor = UIColor.black.withAlphaComponent(0.8)
+        label.font = .systemFont(ofSize: 14) // TODO: - Add font manager
+        label.textColor = UIColor.black.withAlphaComponent(0.8) // TODO: - Add color manager
         label.numberOfLines = .zero
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

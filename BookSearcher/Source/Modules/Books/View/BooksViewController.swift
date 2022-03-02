@@ -46,7 +46,7 @@ final class BooksViewController: BaseViewController {
 // MARK: - BooksViewInputProtocol
 extension BooksViewController: BooksViewInputProtocol {
     func setupView() {
-        view.backgroundColor = .white
+        view.backgroundColor = .white // TODO: - Add color manager
         
         setupNavigationBar()
         adapter = .init(tableView: tableView, output: self)
