@@ -5,7 +5,7 @@
 //  Created by Arman Turalin on 01.03.2022.
 //
 
-import UIKit
+import Foundation
 
 final class BooksAssembly: BaseAssembly {
     func makeModule() -> AssembledScreen<BooksModuleInputProtocol> {
@@ -17,6 +17,7 @@ final class BooksAssembly: BaseAssembly {
         
         viewController.output = presenter
         interactor.output = presenter
+        router.output = presenter
         
         return AssembledScreen(input: presenter, viewController: viewController)
     }

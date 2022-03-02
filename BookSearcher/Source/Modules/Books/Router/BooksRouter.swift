@@ -11,7 +11,7 @@ protocol BooksRouterOutputProtocol: AnyObject {
 }
 
 protocol BooksRouterInputProtocol {
-    func showBooksDetailScreen()
+    func showBooksDetailScreen(with book: BookEntity)
 }
 
 final class BooksRouter: BaseRouter {
@@ -22,8 +22,11 @@ final class BooksRouter: BaseRouter {
 
 // MARK: - BooksRouterInputProtocol
 extension BooksRouter: BooksRouterInputProtocol {
-    func showBooksDetailScreen() {
-        
+    func showBooksDetailScreen(with book: BookEntity) {
+        guard let moduleOutput = output as? BookDetailModuleOutputProtocol else { return }
+        let module = BookDetailAssembly().makeModule()
+        module.input.configureModule(output: moduleOutput, book: book)
+        viewController?.navigationController?.pushViewController(module.viewController, animated: true)
     }
 }
 

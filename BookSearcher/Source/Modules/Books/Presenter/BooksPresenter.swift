@@ -54,6 +54,7 @@ extension BooksPresenter: BooksViewOutputProtocol {
     }
     
     func viewDidSelectBook(_ book: BookEntity) {
+        router.showBooksDetailScreen(with: book)
     }
     
     func viewDidEndSearching(_ text: String) {
@@ -72,6 +73,10 @@ extension BooksPresenter: BooksInteractorOutputProtocol {
 
 // MARK: - BooksRouterOutputProtocol
 extension BooksPresenter: BooksRouterOutputProtocol {
+}
+
+// MARK: - BookDetailModuleOutputProtocol
+extension BooksPresenter: BookDetailModuleOutputProtocol {
 }
 
 // MARK: - Private methods
