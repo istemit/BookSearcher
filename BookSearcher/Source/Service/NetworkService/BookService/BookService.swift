@@ -8,7 +8,7 @@
 import Foundation
 
 protocol BookServiceProtocol {
-    func getBooks(by query: String, completion: @escaping (_ result: Result<[BookEntity], Error>) -> Void)
+    func getBooks(by query: String, completion: @escaping (_ result: Result<[BookEntity], BaseNetworkError>) -> Void)
 }
 
 final class BookService: BookServiceProtocol {
@@ -19,10 +19,10 @@ final class BookService: BookServiceProtocol {
         self.provider = provider
     }
     
-    func getBooks(by query: String, completion: @escaping (_ result: Result<[BookEntity], Error>) -> Void) {
+    func getBooks(by query: String, completion: @escaping (_ result: Result<[BookEntity], BaseNetworkError>) -> Void) {
         provider.request(with: .getBooks(query: query)) { data, error in
             guard let data = data else {
-                if let error = error { print(error.localizedDescription) }
+                if let error = error { completion(.failure(error)) }
                 return
             }
             
@@ -30,8 +30,8 @@ final class BookService: BookServiceProtocol {
                 let response = try JSONDecoder().decode(BooksResponseRaw.self, from: data)
                 let entities = response.items.map { BookEntity.Builder.build(from: $0) }
                 completion(.success(entities))
-            } catch let error {
-                print(error.localizedDescription)
+            } catch _ {
+                completion(.failure(.wrongResponseError))
             }
         }
     }
