@@ -21,6 +21,7 @@ final class BooksPresenter: BasePresenter {
     private let interactor: BooksInteractorInputProtocol
     private let router: BooksRouterInputProtocol
     
+    private var searchText: String = ""
     private var books: [BookEntity] = []
     private var rows: [BooksTableRowType] = []
     
@@ -52,6 +53,8 @@ extension BooksPresenter: BooksViewOutputProtocol {
     }
     
     func viewDidEndSearching(_ text: String) {
+        guard searchText != text else { return }
+        searchText = text
         guard !text.isEmpty else { return }
         interactor.fetchBooks(by: text)
     }
@@ -60,6 +63,7 @@ extension BooksPresenter: BooksViewOutputProtocol {
 // MARK: - BooksInteractorOutputProtocol
 extension BooksPresenter: BooksInteractorOutputProtocol {
     func didFetchBooks(_ books: [BookEntity]) {
+        guard self.books != books else { return }
         self.books = books
         configureRows()
     }
