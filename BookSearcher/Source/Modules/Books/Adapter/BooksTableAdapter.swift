@@ -58,6 +58,7 @@ extension BooksTableAdapter: UITableViewDataSource {
             let cell: BookTableCell = tableView.dequeueReusableCell(for: indexPath)
             cell.setTitle(item.title)
             cell.setAuthor(item.authors.joined(separator: ", "))
+            cell.setThumbnailPath(item.smallThumbnail)
             return cell
         }
     }

@@ -22,7 +22,7 @@ extension BookEntity {
         static func build(from raw: BookRaw) -> BookEntity {
             return BookEntity(id: raw.id,
                               title: raw.volumeInfo?.title ?? "",
-                              authors: raw.volumeInfo?.authors ?? [],
+                              authors: raw.volumeInfo?.authors ?? ["-"],
                               description: raw.volumeInfo?.description ?? "",
                               smallThumbnail: raw.volumeInfo?.imageLinks?.smallThumbnail ?? "",
                               thumbnail: raw.volumeInfo?.imageLinks?.thumbnail ?? "")

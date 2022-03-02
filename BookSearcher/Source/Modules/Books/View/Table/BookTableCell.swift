@@ -6,13 +6,15 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class BookTableCell: UITableViewCell {
     private lazy var thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = Constants.thumbnailCornerRadius
         imageView.layer.masksToBounds = true
-        imageView.backgroundColor = UIColor.red
+        imageView.contentMode = .scaleAspectFill
+        imageView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -28,7 +30,7 @@ final class BookTableCell: UITableViewCell {
         let label = UILabel()
         label.font = .systemFont(ofSize: 16, weight: .bold)
         label.textColor = .black
-        label.numberOfLines = .zero
+        label.numberOfLines = 2
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -70,8 +72,9 @@ extension BookTableCell {
         authorLabel.text = text
     }
     
-    func setThumbnail(_ image: UIImage?) {
-        thumbnailImageView.image = image
+    func setThumbnailPath(_ path: String?) {
+        guard let path = path else { return }
+        thumbnailImageView.sd_setImage(with: URL(string: path))
     }
 }
 
