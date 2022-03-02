@@ -9,6 +9,7 @@ import Foundation
 
 protocol BooksInteractorOutputProtocol: AnyObject {
     func didFetchBooks(_ books: [BookEntity])
+    func didFailToFetchBooks()
 }
 
 protocol BooksInteractorInputProtocol {
@@ -37,7 +38,8 @@ extension BooksInteractor: BooksInteractorInputProtocol {
                 case let .success(items):
                     self.output?.didFetchBooks(items)
                 case .failure:
-                    break
+                    self.output?.didFailToFetchBooks()
+                    // TODO: - Add error handler
                 }
             }
         }

@@ -9,8 +9,6 @@ import UIKit
 
 protocol BooksViewOutputProtocol: AnyObject {
     func viewDidLoad()
-    func viewDidDisappear()
-    func viewWillAppear()
     func viewDidSelectBook(_ book: BookEntity)
     func viewDidEndSearching(_ text: String)
 }

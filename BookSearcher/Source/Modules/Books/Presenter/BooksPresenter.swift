@@ -46,13 +46,7 @@ extension BooksPresenter: BooksViewOutputProtocol {
     func viewDidLoad() {
         view?.setupView()
     }
-    
-    func viewDidDisappear() {
-    }
-    
-    func viewWillAppear() {
-    }
-    
+        
     func viewDidSelectBook(_ book: BookEntity) {
         router.showBooksDetailScreen(with: book)
     }
@@ -68,6 +62,10 @@ extension BooksPresenter: BooksInteractorOutputProtocol {
     func didFetchBooks(_ books: [BookEntity]) {
         self.books = books
         configureRows()
+    }
+    
+    func didFailToFetchBooks() {
+        // TODO: - Add notification to show error
     }
 }
 
