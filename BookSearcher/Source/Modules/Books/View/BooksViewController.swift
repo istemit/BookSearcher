@@ -70,6 +70,16 @@ extension BooksViewController: BooksTableAdapterOutput {
 
 // MARK: - UISearchBarDelegate
 extension BooksViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        guard !searchBar.showsCancelButton else { return }
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         output?.viewDidEndSearching(searchBar.text ?? "")
     }
